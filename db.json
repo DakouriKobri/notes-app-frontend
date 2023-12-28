@@ -1,0 +1,39 @@
+{
+  "notes": [
+    {
+      "content": "HTML is easy",
+      "important": false,
+      "id": 1
+    },
+    {
+      "content": "Browser can execute only JavaScript",
+      "important": false,
+      "id": 2
+    },
+    {
+      "id": 3,
+      "content": "GET and POST are the most important methods of HTTP protocol",
+      "important": false
+    },
+    {
+      "content": "TypeScript is a superset of JavaScript",
+      "important": false,
+      "id": 4
+    },
+    {
+      "content": "Node.js is an open-source JavaScript runtime environment",
+      "important": true,
+      "id": 5
+    },
+    {
+      "content": "Prisma is an open-source ORM",
+      "important": true,
+      "id": 6
+    },
+    {
+      "content": "React is awesome",
+      "important": true,
+      "id": 7
+    }
+  ]
+}
