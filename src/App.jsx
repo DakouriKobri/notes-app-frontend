@@ -9,9 +9,9 @@ import noteService from './services/notes';
 
 function App() {
   const [notes, setNotes] = useState(null);
-  const [newNote, setNewNote] = useState('A new note...');
+  const [newNote, setNewNote] = useState('');
   const [showAll, setShowAll] = useState(true);
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   function hook() {
     noteService.getAll().then((initialNotes) => {
@@ -20,6 +20,19 @@ function App() {
   }
   useEffect(hook, []);
 
+  function addNote(event) {
+    event.preventDefault();
+
+    const noteObject = {
+      content: newNote,
+      important: Math.random() < 0.5,
+    };
+
+    noteService.create(noteObject).then((returnedNote) => {
+      setNotes([...notes, returnedNote]);
+      setNewNote('');
+    });
+  }
   function toggleImportanceOf(id) {
     const note = notes.find((note) => note.id === id);
     const changedNote = { ...note, important: !note.important };
@@ -27,9 +40,9 @@ function App() {
     noteService
       .update(id, changedNote)
       .then((returnedNote) => {
-        const updatedNotes = notes.map((note) =>
-          note.id === id ? returnedNote : note
-        );
+        const updatedNotes = notes.map((note) => {
+          note.id === id ? returnedNote : note;
+        });
         setNotes(updatedNotes);
       })
       .catch((error) => {
@@ -38,21 +51,10 @@ function App() {
         );
         setNotes(notes.filter((note) => note.id !== id));
         console.log(error.message);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
       });
-  }
-
-  function addNote(event) {
-    event.preventDefault();
-
-    const newNoteObject = {
-      content: newNote,
-      important: Math.random() < 0.5,
-    };
-
-    noteService.create(newNoteObject).then((returnedNote) => {
-      setNotes([...notes, returnedNote]);
-      setNewNote('');
-    });
   }
 
   function handleNoteChange(event) {
